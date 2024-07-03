@@ -34,10 +34,10 @@ print("-------------------------")
 output_file = os.path.join("C:\\Users\\Owner\\Desktop\\python-challenge\\PyPoll\\Analysis", "election_analysis.txt")
 with open(output_file, "w") as file:
     file.write("Election Results\n \n-------------------------\n \n"
-               f"Total Votes: {Total_votes}\n"
-               "-------------------------\n")
+               f"Total Votes: {Total_votes}\n \n"
+               "-------------------------\n \n")
     for i in range(len(Candidates)):
-        file.write(f"{Candidates[i]}: {Percentage[i]:.3%} ({Votes[i]})\n")
-    file.write("-------------------------\n")
-    file.write(f"Winner: {Winner}\n")
+        file.write(f"{Candidates[i]}: {Percentage[i]:.3%} ({Votes[i]})\n \n")
+    file.write("-------------------------\n \n")
+    file.write(f"Winner: {Winner}\n \n")
     file.write("-------------------------")
