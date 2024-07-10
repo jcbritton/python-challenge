@@ -2,7 +2,7 @@ import os
 import csv
 
 # Read the CSV file into a DataFrame
-with open("C:\\Users\\Owner\\Desktop\\python-challenge\\PyBank\\Resources\\budget_data.csv", "r") as file:
+with open('Resources/budget_data.csv', 'r') as file:
     pybank = csv.reader(file)
     next(pybank)  # Skip the header row
     pybank_csv = list(pybank)

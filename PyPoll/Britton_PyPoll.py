@@ -2,7 +2,7 @@ import csv
 import os
 
 # Read the CSV file
-with open("C:\\Users\\Owner\\Desktop\\python-challenge\\PyPoll\\Resources\\election_data.csv", "r") as file:
+with open('Resources\election_data.csv', 'r') as file:
     reader = csv.reader(file)
     next(reader)  # Skip the header row
     data = list(reader)
