@@ -23,6 +23,7 @@ for row in pybank_csv:
         change = row[1] - previous_row_value
         changes.append(change)
     previous_row_value = row[1]
+
 # Calculate the net total amount of "Profit/Losses" over the entire period
 Total = f"${net_total}"
 
@@ -31,43 +32,24 @@ if len(changes) == 0:
     average_change = 0
 else: 
     average_change = f"${sum(changes) / len(changes):.2f}"
+    
+# Calculate changes and store them with the corresponding dates
+changes = []
+for i in range(1, len(pybank_csv)):
+    change = int(pybank_csv[i][1]) - int(pybank_csv[i-1][1])
+    changes.append((pybank_csv[i][0], change))  # Store date and change as a tuple
 
-#The greatest increase in profits (date and amount) over the entire period
-greatest_increase = changes[0]
-index_greatest_increase = 1
-greatest_decrease = changes[0]
-index_greatest_decrease = 1
-
-for index, change in enumerate(changes):
-    if change > greatest_increase:
-        greatest_increase = change
-        index_greatest_increase = index
-    elif change < greatest_decrease:
-        greatest_decrease = change
-        index_greatest_decrease = index   
-
-date_greatest_increase = pybank_csv[index_greatest_increase + 1][0]
-date_greatest_decrease = pybank_csv[index_greatest_decrease + 1][0]
-
-# The greatest decrease in losses (date and amount) over the entire period
-for j in changes:    
-    if all(j < change for change in changes): 
-        greatest_decrease = j
-        date_greatest_decrease = pybank_csv[j][0]
-
-# Find the index of the row with the greatest increase in "Profit/Losses"
-index_greatest_increase = changes.index(max(changes))
-
-# Find the index of the row with the greatest decrease in "Profit/Losses"
-index_greatest_decrease = changes.index(min(changes))
+# Find the greatest increase and decrease
+greatest_increase = max(changes, key=lambda x: x[1])
+greatest_decrease = min(changes, key=lambda x: x[1])
 
 # Print the analysis to the terminal
 print("Financial Analysis\n \n---------------------------------\n \n"
       f"Total Months: {Total_Months}\n"
       f"Total: {Total}\n"
       f"Average Change: {average_change}\n"
-      f"Greatest Increase: {date_greatest_increase} (${greatest_increase})\n"
-      f"Greatest Decrease: {date_greatest_decrease} (${greatest_decrease})")
+      f"Greatest Increase: {greatest_increase[0]} (${greatest_increase[1]})\n"
+      f"Greatest Decrease: {greatest_decrease[0]} (${greatest_decrease[1]})")
 
 # Export the analysis to a text file
 output_file = os.path.join("C:\\Users\\Owner\\Desktop\\python-challenge\\PyBank\\Analysis", "financial_analysis.txt")
@@ -76,5 +58,5 @@ with open(output_file, "w") as file:
                f"Total Months: {Total_Months}\n"
                f"Total: {Total}\n"
                f"Average Change: {average_change}\n"
-               f"Greatest Increase: {date_greatest_increase} (${greatest_increase})\n"
-               f"Greatest Decrease: {date_greatest_decrease} (${greatest_decrease})")
+               f"Greatest Increase: {greatest_increase[0]} (${greatest_increase[1]})\n"
+               f"Greatest Decrease: {greatest_decrease[0]} (${greatest_decrease[1]})")
