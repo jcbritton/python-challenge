@@ -1,32 +1,40 @@
-import pandas as pd
+import csv
 import os
 
-# Read the CSV file into a DataFrame
-pypoll_csv = pd.read_csv("C:\\Users\\Owner\\Desktop\\python-challenge\\PyPoll\\Resources\\election_data.csv")
+# Read the CSV file
+with open("C:\\Users\\Owner\\Desktop\\python-challenge\\PyPoll\\Resources\\election_data.csv", "r") as file:
+    reader = csv.reader(file)
+    next(reader)  # Skip the header row
+    data = list(reader)
 
 # Calculate the total number of votes cast
-Total_votes = len(pypoll_csv)
+Total_votes = len(data)
 
-# List the candidates who received votes
-Candidates = pypoll_csv["Candidate"].unique()
+# Create a dictionary to store the number of votes for each candidate
+Votes = {}
 
-# Calculate the total number of votes each candidate won
-Votes = pypoll_csv["Candidate"].value_counts()
+# Count the votes for each candidate
+for row in data:
+    candidate = row[2]
+    if candidate in Votes:
+        Votes[candidate] += 1
+    else:
+        Votes[candidate] = 1
 
 # Calculate the percentage of votes each candidate won
-Percentage = Votes / Total_votes
+Percentage = {candidate: votes / Total_votes for candidate, votes in Votes.items()}
 
 # Determine the winner of the election based on popular vote
-Winner = Votes.idxmax()
+Winner = max(Votes, key=Votes.get)
 
 # Print the analysis to the terminal
 print("Election Results\n \n-------------------------\n \n"
-      f"Total Votes: {Total_votes}\n"
-      "-------------------------\n")
-for i in Votes.index:
-    print(f"{i}: {Percentage[i]:.3%} ({Votes[i]})")
-print("-------------------------")
-print(f"Winner: {Winner}")
+      f"Total Votes: {Total_votes}\n \n"
+      "-------------------------\n \n")
+for candidate, votes in Votes.items():
+    print(f"{candidate}: {Percentage[candidate]:.3%} ({votes})\n \n")
+print("-------------------------\n \n")
+print(f"Winner: {Winner}\n \n")
 print("-------------------------")
 
 # Export the analysis to a text file
@@ -35,8 +43,8 @@ with open(output_file, "w") as file:
     file.write("Election Results\n \n-------------------------\n \n"
                f"Total Votes: {Total_votes}\n \n"
                "-------------------------\n \n")
-    for i in Votes.index:
-        file.write(f"{i}: {Percentage[i]:.3%} ({Votes[i]})\n \n")
+    for candidate, votes in Votes.items():
+        file.write(f"{candidate}: {Percentage[candidate]:.3%} ({votes})\n \n")
     file.write("-------------------------\n \n")
     file.write(f"Winner: {Winner}\n \n")
     file.write("-------------------------")
