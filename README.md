@@ -1,4 +1,5 @@
-This homework assignment was completed with the help of ([Perplexity AI](https://www.perplexity.ai/search/given-the-following-code-snipp-_sWxdKtnQPmahUHE3QAmgw)).
+PyBank: This homework assignment was completed with the help of ([Perplexity AI](https://www.perplexity.ai/search/given-the-following-code-snipp-_sWxdKtnQPmahUHE3QAmgw)). The PyPoll homework assignment followed this same logic with the exception of the version using the lambda expression. Although we had not covered lambda expressions yet in the course, I was familiar with them and thought it might be a good place to use the functionality of lambda expressions. I asked Perplexity AI to help with an example of the solution using the lambda expression which is present in the lambda solution provided. 
+
 # Index + 1 solution
 > Given the following code snippet, why is the output for date_greatest_increase one month off? It should say:                                                
 ```
